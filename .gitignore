@@ -33,8 +33,11 @@ AppDir-*
 appimage-*
 
 # Qt related
-qt-build
-qt-src
+qt-build**
+qt-src**
 build
 build-aarch64
 build-x86_64
+
+# IANA Timezone database generated as part of build
+timezones.txt

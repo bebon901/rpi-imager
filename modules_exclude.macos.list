@@ -1,3 +1,7 @@
+# macOS-specific Qt module exclusions for building minimal Qt
+# This file is used by src/mac/build-qt-macos.sh if present.
+# You can diverge this list from the embedded list as needed for macOS.
+
 qtwebengine
 qt3d
 qtmultimedia
@@ -31,4 +35,6 @@ qtopcua
 qtscxml
 qtsensors
 qtwebsockets
+# Additional modules that pull in unwanted dependencies
 qtbase-sql
+

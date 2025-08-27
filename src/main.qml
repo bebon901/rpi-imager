@@ -213,6 +213,7 @@ ApplicationWindow {
                         padding: 0
                         bottomPadding: 0
                         topPadding: 0
+                        enabled: !window.imageWriter.isEmbeddedMode()
                         Layout.minimumHeight: 40
                         Layout.fillWidth: true
                         onClicked: {
@@ -561,6 +562,7 @@ ApplicationWindow {
                             Layout.bottomMargin: 10
 
                             delegate: ItemDelegate {
+                                id: languageDelegate
                                 width: parent.width
                                 height: 30
 
@@ -573,8 +575,8 @@ ApplicationWindow {
                                 }
 
                                 background: Rectangle {
-                                    id: bgrect
-                                    color: parent.hovered ? Style.listViewHoverRowBackgroundColor : Style.listViewRowBackgroundColor
+                                    id: langDelegateBackground
+                                    color: languageDelegate.hovered ? Style.listViewHoverRowBackgroundColor : Style.listViewRowBackgroundColor
                                 }
                             }
 
@@ -614,6 +616,7 @@ ApplicationWindow {
                             Layout.rightMargin: 30
 
                             delegate: ItemDelegate {
+                                id: keyboardDelegate
                                 width: parent.width
                                 height: 30
 
@@ -626,8 +629,8 @@ ApplicationWindow {
                                 }
 
                                 background: Rectangle {
-                                    id: bgrect
-                                    color: parent.hovered ? Style.listViewHoverRowBackgroundColor : Style.listViewRowBackgroundColor
+                                    id: keyboardDelegateBackground
+                                    color: keyboardDelegate.hovered ? Style.listViewHoverRowBackgroundColor : Style.listViewRowBackgroundColor
                                 }
                             }
                             Keys.onPressed: (event) => {
@@ -708,6 +711,13 @@ ApplicationWindow {
         id: dstpopup
         imageWriter: window.imageWriter
         windowWidth: window.width
+        onClosed: {
+            if (window.imageWriter.readyToWrite()) {
+                writebutton.forceActiveFocus()
+            } else {
+                dstbutton.forceActiveFocus()
+            }
+        }
     }
 
     MsgPopup {
@@ -933,12 +943,17 @@ ApplicationWindow {
         imageWriter.createHardwareTags();
         ospopup.fetchOSlist()
         let hardwareTag = window.imageWriter.getHardwareName();
-        console.log(hardwareTag);
+        if (hardwareTag !== "") {
+            console.log(hardwareTag);
+        }
         if (window.imageWriter.isEmbeddedMode() && hardwareTag !== ""){
                 // Limit the hardware selection button to only the specified device
                 text0.text = "Hardware Type Detected";
                 hwbutton.enabled = false
                 hwbutton.text = hardwareTag;
+        }
+        else {
+            hwbutton.enabled = true;
         }
     }
 

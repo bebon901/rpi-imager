@@ -1,3 +1,7 @@
+# macOS-specific Qt feature exclusions for building minimal Qt
+# This file is used by src/mac/build-qt-macos.sh if present.
+# You can diverge this list from the embedded list as needed for macOS.
+
 androiddeployqt
 appstore-compliant
 assistant
@@ -23,7 +27,7 @@ jalalicalendar
 keysequenceedit
 lcdnumber
 localserver
-macdeployqt
+# macdeployqt - NEEDED for deployment
 movie
 nfc
 pdf
@@ -49,7 +53,6 @@ qtpdf-quick-build
 qtpdf-widgets-build
 qtplugininfo
 qtprotobufgen
-rubberband
 sanitize_fuzzer_no_link
 scxml
 scxml-ecmascriptdatamodel
@@ -64,7 +67,6 @@ systemtrayicon
 tabletevent
 testlib
 testlib_selfcover
-texthtmlparser
 textmarkdownreader
 textmarkdownwriter
 textodfwriter
@@ -82,5 +84,12 @@ wayland-compositor-quick
 webengine-developer-build
 webengine-jumbo-build
 windeployqt
+# SSL/TLS backend exclusions
+openssl
+openssl-linked
+# SQLite driver exclusions
 sql-sqlite
+# Virtual keyboard feature exclusions (removed invalid feature name)
+# GIF image format support (not needed for imaging app)
 gif
+
